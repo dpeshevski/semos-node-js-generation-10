@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "firstName": "UserTest1",
+    "lastName": "UserTest1",
+    "username": "usertest1"
+  },
+  {
+    "id": "2",
+    "firstName": "UserTest2",
+    "lastName": "UserTest2",
+    "username": "usertest2"
+  },
+  {
+    "id": "3",
+    "firstName": "UserTest1",
+    "lastName": "UserTest1",
+    "username": "usertest1"
+  },
+  {
+    "id": "4",
+    "firstName": "UserTest2",
+    "lastName": "UserTest2",
+    "username": "usertest2"
+  },
+  {
+    "id": "5",
+    "firstName": "UserTest1",
+    "lastName": "UserTest1",
+    "username": "usertest1"
+  },
+  {
+    "id": "6",
+    "firstName": "UserTest2",
+    "lastName": "UserTest2",
+    "username": "usertest2"
+  }
+]

@@ -62,11 +62,43 @@ app.put('/users/:id', (req, res) => {
   // Напишете го остатокот од фунцијата која што треба да овозможи ажурирање на податоците на корисникот според внесениот id
   // Овозможете проверка на валидација кој што треба да врати грешка доколку корисникот не постои со внесеното id, во спротивно,
   // да овозможи ажурирање
+
+  const { id } = req.params; // req.params.id
+
+  const userIndex = usersDb.findIndex(user => user.id === id);
+
+  if (userIndex > -1) {
+    if (req.body.id) {
+      res.send({ error: "Id cann't be overwritten." });
+    } else {
+      const toUpdateData = {
+        id,
+        firstName,
+        lastName,
+        username
+      }
+      usersDb[userIndex] = toUpdateData;
+
+      res.send({ body: usersDb });
+    }
+  } else {
+    res.send({ error: `User ${id} is not found.`});
+  }
 });
 
 // Delete
 app.delete('/users/:id', (req, res) => {
   // Напишете го остатокот од фунцијата која што треба да овозможи бришење на корисник според внесениот id
+
+  const { id } = req.params;
+  const userIndex = usersDb.findIndex(user => user.id === id); // 0, 1, 2, 3, 4, 5, .. N-1, N = array.length
+
+  if (userIndex > -1) {
+    usersDb.splice(userIndex, 1); // [1, 2, 3, 4, 5, 6, 7].splice(5, 1);
+    res.send({ body: `User ${id} has been removed.`});
+  } else {
+    res.send({ error: `User ${id} is not found.`});
+  }
 });
 
 
