@@ -1,0 +1,178 @@
+> show dbs
+
+> use test1
+
+> show collections
+
+> db.dropDatabase()
+
+> show dbs
+
+-- create a new database
+
+> use acme
+
+> show dbs
+
+> db
+
+-- create a new collection
+
+> db.createCollection('posts')
+
+-- show all collections
+
+> show collections
+
+-- inserting documents/data into collection
+
+> db.posts.insertOne({ 
+	title: 'Post One',
+	body: 'Body of post one',
+	category: 'News',
+	likes: 4,
+	tags: ['news', 'events'],
+	user: {
+		name: 'John Doe',
+		status: 'author'
+	},
+	date: Date()
+})
+
+-- insert many 
+> db.posts.insertMany([
+	{
+		title: 'Post Two',
+		body: 'Body of post two',
+		category: 'Technology',
+		date: Date()
+	},
+	{
+		title: 'Post Three',
+		body: 'Body of post three',
+		category: 'News',
+		date: Date()
+	},
+	{
+		title: 'Post Four',
+		body: 'Body of post four',
+		category: 'Entertainment',
+		date: Date()
+	}
+])
+
+-- query data/ find data
+> db.posts.find()
+
+> db.posts.find().pretty()
+
+-- only the news category
+> db.posts.find({ category: 'News' }).pretty()
+
+- sort (1 - ascending, -1 - desecending)
+> db.posts.find().sort({ title: 1 }).pretty()
+
+-- count how many documents we have
+> db.posts.find({ category: 'News' }).count()
+
+-- if we want a limint count records
+> db.posts.find().limit(2)
+
+-- if we want to limit sorted data by desending
+> db.posts.find().sort({ title: -1 }).limit(2)
+
+-- forEach
+> db.posts.find().forEach(function(doc) { print('Blog Post: ' + doc.title) })
+
+-- one specific row 
+> db.posts.findOne({ category: 'News' })
+
+-- if we want to update
+> db.posts.update({ title: 'Post Two' }, 
+	{
+		title: 'Post Two',
+		body: 'New post 2 body',
+		data: Date()
+	},
+	{
+		upsert: true
+	}
+)
+
+> db.posts.find({ title: 'Post Two' }).pretty()
+
+-- if we use $set operator
+> db.posts.update({ title: 'Post Two' },
+	{
+		$set: {
+			body: 'Post of post 2',
+			category: 'Technology'
+		}
+	}
+)
+
+> db.posts.find({ title: 'Post Two' }).pretty()
+
+-- increment ($inc operator)
+> db.posts.find({ title: 'Post One' }).pretty()
+
+> db.posts.update({ title: 'Post One' }, { $inc: { likes: 2 } })
+> db.posts.find({ title: 'Post One' }).pretty()
+
+-- rename field 
+> db.posts.update({ title: 'Post One }, { $rename: { likes: 'views' } })
+
+> db.posts.find({ title: 'Post One' }).pretty()
+
+-- deleting
+> db.posts.find().pretty()
+
+> db.posts.remove({ title: 'Post Four' })
+> db.posts.find().pretty()
+
+-- if we want to have subdocuments (seprated )
+> db.posts.update({ title: 'Post One' }, 
+  {
+  $set: {
+    comments: [
+      {
+        user: 'Mary Williams',
+		    body: 'Comment One',
+		    date: Date() 
+	    },
+	    {
+	    	user: 'Harry White',
+	    	body: 'Comment Two',
+		    date: Date() 
+	    }
+	  ]
+  }
+}
+
+> db.posts.find({ title: 'Post One' }).pretty()
+
+-- all the post have a comments with Mary Williams
+> db.posts.find({ comments: { $elemMatch: { user: 'Mary Williams' } } }).pretty()
+
+
+-- search (type search) 
+> db.posts.createIndex({ title: 'text' })
+
+> db.posts.find({ $text: { $search: "\"Post O\"" } }).pretty()
+
+> db.posts.find({ $text: { $search: "\"Post T\"" } }).pretty()
+
+-- quick update
+> db.posts.update({ title: 'Post Two' }, { $set: { views: 10 })
+
+-- greater then less then
+> db.posts.find({ views: { $gt: 6 } }).pretty()
+
+> db.posts.find({ views: { $gte: 6 } }).pretty()
+
+> db.posts.find({ views: { $lte: 6 } }).pretty()
+
+> db.posts.find({ views: { $lt: 6 } }).pretty()
+
+
+> exit
