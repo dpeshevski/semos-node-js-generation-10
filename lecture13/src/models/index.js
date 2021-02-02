@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const User = require('./users');
+const Post = require('./posts');
 
 require('dotenv').config();
 
@@ -19,6 +20,7 @@ const connectDb = () => {
 
 const models = {
   User,
+  Post
 };
 
 module.exports = { models, connectDb };

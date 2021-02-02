@@ -3,15 +3,27 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const userSchema = new Schema({
-  name: String,
+  name: {
+    type: String,
+    required: [true, 'Name is required.'],
+  }, // { type: String }
   email: {
-    type: String
+    type: String,
+    unique: true
   },
   phone: {
-    type: String
+    type: String,
+    // xxx-xxxx-xxxx
+  },
+  age: {
+    type: Number,
+    min: [13, 'At least 13 years']
   },
   username: {
-    type: String
+    type: String,
+    minlength: [8, 'At least 8 chars'],
+    maxlength: [16, 'Max length is 16 chars'],
+    unique: true
   },
   createdAt: {
     type: Date,
